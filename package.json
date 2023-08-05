@@ -1,0 +1,40 @@
+{
+  "name": "activerecord-pattern-unlearning-clean-architecture",
+  "version": "v0.0.1",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "scripts": {
+    "build": "slidev build",
+    "dev": "slidev --open",
+    "export": "slidev export --with-clicks --with-toc",
+    "export-notes": "slidev export-notes"
+  },
+  "dependencies": {
+    "@katzumi/slidev-addon-qrcode": "^0.0.12",
+    "@katzumi/slidev-addon-blog-card": "^0.0.2",
+    "@slidev/cli": "^0.42.5",
+    "@slidev/theme-default": "*",
+    "@slidev/theme-seriph": "*",
+    "slidev-addon-rabbit": "^0.1.0"
+  },
+  "devDependencies": {
+    "@iconify-json/emojione": "^1.1.6",
+    "@iconify-json/emojione-monotone": "^1.1.4",
+    "@iconify-json/fxemoji": "^1.1.4",
+    "@iconify-json/ic": "^1.1.13",
+    "@iconify-json/logos": "^1.1.33",
+    "@iconify-json/material-symbols": "^1.1.52",
+    "@iconify-json/noto": "^1.1.11",
+    "@iconify-json/simple-icons": "^1.1.62",
+    "@iconify-json/twemoji": "^1.1.11",
+    "playwright-chromium": "^1.36.2"
+  },
+  "slidev": {
+    "addons": [
+      "slidev-addon-rabbit",
+      "@katzumi/slidev-addon-qrcode",
+      "@katzumi/slidev-addon-blog-card"
+    ]
+  }
+}
