@@ -193,29 +193,25 @@ layout: two-cols
 
 ## フルスタックフレームワーク
 
-* Laravel  
+* Laravel <skill-icons-laravel-light />  
 Eloquent ORM
-* Symfony  
+* Symfony <skill-icons-symfony-light />  
 Doctrine ORM
-* Yii framework  
+* Yii framework <devicon-yii-wordmark />  
 ActiveRecord
-* Ruby on Rails  
+* Ruby on Rails <logos-rails />  
 ActiveRecord
-* Spring Boot  
+* Spring Boot <devicon-spring-wordmark />  
 Spring Data JPA
 
 ::right::
 
 ## ライブラリ
 
-* Java  
+* Java <devicon-java-wordmark />  
 Hibernate
-* Golang  
+* Golang <logos-gopher />  
 GORM, XORM
-
-<!--
-icon使いたい
--->
 
 ---
 
@@ -277,7 +273,7 @@ foreach ($users as $user) {
 layout: center
 ---
 
-# 超絶便利！
+# 👍 超絶便利！
 
 ---
 layout: center
@@ -436,6 +432,146 @@ layout: center
 ---
 
 # ActiveRecordはもの凄くリッチなパターン
+
+---
+layout: center
+---
+
+# アーキテクチャパターンとしての向き・不向きがある
+
+---
+
+# ActiveRecordパターンが向いているケース
+
+* ドメインロジックがシンプル
+* ドメインモデルとテーブルとの構造が非常に近い  
+Active Recordパターンでは、テーブルとクラス、行とインスタンス、カラムとプロパティを「全て1対1で割り当てる」ルールが前提になります
+
+<br />
+
+<v-click>
+
+<div class="fusen-003">
+上記の前提が守られている場合は非常に強力に機能する！<br />  
+強力すぎるが故に、その前提を保つことに注力するように意識が向くようになる<br />  
+</div>
+
+</v-click>
+
+<style>
+.fusen-003 {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 2em 2.2em;
+    border-left: 27px solid #2589d0;
+    background-color: #a9ceec;
+    color: #333333;
+}
+
+.fusen-003::before {
+    position: absolute;
+    bottom: -5px;
+    right: 7px;
+    z-index: -1;
+    transform: rotate(5deg);
+    width: 70%;
+    height: 50%;
+    background-color: #d0d0d0;
+    content: "";
+    filter: blur(4px);
+}
+</style>
+
+---
+
+# パターンの前提が崩れシンプルでなくなってきた時に現れるワード
+
+* Fat Model
+* Fat Controller
+* MVAC
+* Service Object
+
+---
+layout: center
+---
+
+# 責務が色々溢れてきてしまっている
+
+---
+
+# 関心事（＝責務）を分けて考えると
+ドメインの振る舞いとデータの永続化は別レイヤーの関心事
+
+ActiveRecordパターンは
+
+<div class="mention">Domain Model</div>(Domain Logic Patterns) + <div class="mention">Row Data Gateway</div>(Data Source Architectural Patterns)
+
+となる。  
+業務ロジックを持ったRow Data Gateway。  
+ActiveRecordパターンは敢えてレイヤーを密結合にしてDRY [^1] で書くことにフォーカスしています。
+
+[^1]: Don't Repeat Your Self：繰り返しを避けること
+
+---
+
+# レイヤードにしていく理由
+複雑性に対峙する為
+
+* ひとつのことをうまくうまくこなすように分離する
+* テストをしやすくする  
+Mockしやすくなる。DBに依存しないテストになる
+* 認知負荷を下げる為に小さくする
+
+---
+layout: center
+---
+
+# レイヤー増えるだけなの？それってServiceLayer足しただけでは？🤔
+
+---
+layout: center
+---
+
+# マインドセットが違う
+
+---
+layout: image-right
+image: https://www.martinfowler.com/eaaCatalog/ServiceLayerSketch.gif
+---
+
+# データソースを中心にした設計
+
+ドメインがデータソースに依存している
+
+* データソースが変更した場合にドメインモデルが影響を受ける
+
+<arrow x1="500" y1="435" x2="700" y2="300" color="red" width="3" arrowSize="2" />
+
+---
+
+# ドメインモデルを中心にした設計
+
+[The Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
+<img src="https://blog.cleancoder.com/uncle-bob/images/2012-08-13-the-clean-architecture/CleanArchitecture.jpg" class="h-90 rounded shadow" alt="CleanArchitecture" />
+
+
+データソースレイヤーは外に配置されている
+
+<arrow x1="90" y1="480" x2="110" y2="380" color="red" width="3" arrowSize="2" />
+
+---
+layout: center
+---
+
+# 重要な原則
+複雑さに対峙する為に
+
+---
+layout: center
+---
+
+# SRP: 単一責務の原則（Single Responsibility Principle）
 
 
 ---
