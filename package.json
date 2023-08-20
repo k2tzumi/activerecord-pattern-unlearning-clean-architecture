@@ -16,6 +16,7 @@
     "@slidev/cli": "^0.42.5",
     "@slidev/theme-default": "*",
     "@slidev/theme-seriph": "*",
+    "slidev-addon-components": "^0.0.1",
     "slidev-addon-rabbit": "^0.1.0"
   },
   "devDependencies": {
@@ -36,7 +37,8 @@
     "addons": [
       "slidev-addon-rabbit",
       "@katzumi/slidev-addon-qrcode",
-      "@katzumi/slidev-addon-blog-card"
+      "@katzumi/slidev-addon-blog-card",
+      "slidev-addon-components"
     ]
   }
 }
