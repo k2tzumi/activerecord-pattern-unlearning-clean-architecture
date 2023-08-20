@@ -32,6 +32,7 @@ fonts:
 addons:
   - "@katzumi/slidev-addon-qrcode"
   - "@katzumi/slidev-addon-blog-card"
+  - "slidev-addon-components"
 ---
 
 # ActiveRecordパターンの呪縛を学びほぐして挑むクリーンアーキテクチャへの入り口
@@ -121,6 +122,7 @@ layout: default
 
 ---
 layout: center
+transition: fade
 ---
 
 # PHPのクラスでパターンを実装してみると
@@ -183,6 +185,7 @@ class User {
 
 ---
 layout: center
+transition: fade-out
 ---
 
 # 各種フレームワーク・ライブラリで採用
@@ -284,6 +287,7 @@ layout: center
 
 ---
 layout: center
+transition: slide-up
 ---
 
 # 深掘りしてみる
@@ -345,6 +349,8 @@ ActiveRecordパターンに言及されている領域
 9. Base Patterns  
 
 ---
+transition: fade
+---
 
 # Data Source Architectural Patterns
 
@@ -367,6 +373,8 @@ layout: center
 # どういうことだってばよ？
 
 ---
+transition: fade
+---
 
 # 改めてActiveRecordとは？
 
@@ -380,10 +388,13 @@ An object carries both data and behavior.  "
 
 ---
 layout: center
+transition: fade
 ---
 
 # 🤔
 
+---
+transition: fade
 ---
 
 # 改めてActiveRecordとは？
@@ -458,34 +469,10 @@ Active Recordパターンでは、テーブルとクラス、行とインスタ�
 
 </v-click>
 
-<style>
-.fusen-003 {
-    display: flex;
-    align-items: center;
-    position: relative;
-    padding: 2em 2.2em;
-    border-left: 27px solid #2589d0;
-    background-color: #a9ceec;
-    color: #333333;
-}
-
-.fusen-003::before {
-    position: absolute;
-    bottom: -5px;
-    right: 7px;
-    z-index: -1;
-    transform: rotate(5deg);
-    width: 70%;
-    height: 50%;
-    background-color: #d0d0d0;
-    content: "";
-    filter: blur(4px);
-}
-</style>
-
 ---
 
-# パターンの前提が崩れシンプルでなくなってきた時に現れるワード
+# 悪い兆候 🚩Red　flags
+パターンの前提が崩れシンプルでなくなってきた時に現れるワード
 
 * Fat Model
 * Fat Controller
@@ -494,9 +481,10 @@ Active Recordパターンでは、テーブルとクラス、行とインスタ�
 
 ---
 layout: center
+transition: slide-up
 ---
 
-# 責務が色々溢れてきてしまっている
+# 責務が溢れてきてしまっている
 
 ---
 
@@ -509,7 +497,7 @@ ActiveRecordパターンは
 
 となる。  
 業務ロジックを持ったRow Data Gateway。  
-ActiveRecordパターンは敢えてレイヤーを密結合にしてDRY [^1] で書くことにフォーカスしています。
+ActiveRecordパターンは敢えてレイヤーを分けずに密結合にしてDRY [^1] に書けるように注力しています。
 
 [^1]: Don't Repeat Your Self：繰り返しを避けること
 
@@ -518,7 +506,7 @@ ActiveRecordパターンは敢えてレイヤーを密結合にしてDRY [^1] �
 # レイヤードにしていく理由
 複雑性に対峙する為
 
-* ひとつのことをうまくうまくこなすように分離する
+* ひとつのことをうまくこなすように分離する
 * テストをしやすくする  
 Mockしやすくなる。DBに依存しないテストになる
 * 認知負荷を下げる為に小さくする
@@ -564,14 +552,317 @@ image: https://www.martinfowler.com/eaaCatalog/ServiceLayerSketch.gif
 layout: center
 ---
 
-# 重要な原則
-複雑さに対峙する為に
+# 設計の原則
+
+## DRY vs SOLID
+
+---
+layout: image-right
+image: https://m.media-amazon.com/images/I/51LkcwTMC8L._SX387_BO1,204,203,200_.jpg
+---
+
+# Clean Architecture　達人に学ぶソフトウェアの構造と設計
+第Ⅲ部 設計の原則
+
+* SOLIDの原則  
+コンポーネントレベルで設計の原則が適用されている
+
+---
+
+# SOLIDの原則
+各設計の原則の頭文字
+
+* S: 単一責任の原則（SRP: Single Responsibility Principle）
+* O: 開放閉鎖の原則（OCP: Open-Closed Principle）
+* L: リスコフの置換原則（LSP: Liskov Substitution Principle）
+* I: インターフェース分離の原則（ISP: Interface Segregation Principle）
+* D: 依存性逆転の原則（DIP: Dependency Inversion Principle）
+
+---
+
+# SRP: 単一責務の原則
+Single Responsibility Principle
+
+モジュール、クラスまたは関数は、単一の機能について責任を持ち、その機能をカプセル化するべきであるという原則  
+この原則を遵守することで、ソフトウェアの変更やテストが容易になり、コードの可読性や再利用性が向上する
+
+### 🚩 悪い兆候
+多目的クラス, 神クラス, 責任の不明確さ
+
+<v-click>
+
+<div class="fusen-003">
+クリーンアーキテクチャでは、各層やコンポーネントが単一責任を持つように設計される<br />
+レイヤーごとに責任を分けることで、変更が他のレイヤーに影響しないようにしている  
+</div>
+
+</v-click>
+
+---
+
+# OCP: 開放閉鎖の原則
+Open-Closed Principle
+
+ソフトウェア要素（クラス、モジュール、関数など）は、拡張に対しては開いており、修正に対しては閉じているべきであるという原則。  
+この原則を遵守することで、ソースコードの修正をせず、各要素の振る舞いを拡張することが可能になり、保守性や再利用性が向上する
+
+### 🚩 悪い兆候
+条件分岐の乱用, 責任過多
+
+<v-click>
+
+<div class="fusen-003">
+クリーンアーキテクチャでは、内側の層が外側の層に対して開放されており、外側の層が内側の層に対して閉鎖される。<br />
+内側のレイヤーは外側のレイヤーに影響されないようにし、外側のレイヤーは内側のレイヤーを拡張することができる。
+</div>
+
+</v-click>
+
+---
+
+# LSP: リスコフの置換原則
+Liskov Substitution Principle
+
+派生クラスは、その基底クラスと置換可能であるべきであるという原則。  
+この原則を遵守することで、型の互換性や拡張性が保たれ、コードの再利用性や可読性が向上する
+
+### 🚩 悪い兆候
+事前条件の強化, 事後条件の弱化
+
+<v-click>
+
+<div class="fusen-003">
+クリーンアーキテクチャでは、インターフェースを用いて抽象化された内側の層が、具体的な実装である外側の層に置き換えられるように設計される。<br />
+内側のレイヤーは外側のレイヤーの具体的な実装を知る必要がなくなる
+</div>
+
+</v-click>
+
+---
+
+# ISP: インターフェース分離の原則
+Interface Segregation Principle
+
+インターフェースを複雑にしてはいけないので、分離できるものは分離しましょうという原則  
+この原則を遵守することで、クライアントに不要なメソッドへの依存を強制しないことができ、コードの可読性や保守性が向上する
+
+### 🚩 悪い兆候
+肥大化したインターフェース, 不完全なインターフェース
+
+<v-click>
+
+<div class="fusen-003">
+クリーンアーキテクチャでは、各層やコンポーネントが必要最低限のインターフェースを持つように設計される <br />
+内側のレイヤーが外側のレイヤーの具体的な実装を知る必要がなくなる
+</div>
+
+</v-click>
+
+---
+
+# DIP: 依存性逆転の原則
+Dependency Inversion Principle
+
+あるモジュールが別のモジュールを利用するとき、モジュールはお互いに直接依存すべきではなく、どちらのモジュールも、共有された抽象（インターフェイスや抽象クラスなど）に依存すべきであるという原則  
+この原則を遵守することで、プログラムの重要な部分が、重要でない部分に依存しないように設計でき、コードの柔軟性や再利用性が向上する
+
+### 🚩 悪い兆候
+抽象が具象に依存する
+
+<v-click>
+
+<div class="fusen-003">
+クリーンアーキテクチャでは、内側の層が外側の層に依存しないように設計される<br />
+モジュールは抽象に依存するようにし、これにより、内側のレイヤーは外側のレイヤーの変更に影響されなくなる
+</div>
+
+</v-click>
 
 ---
 layout: center
 ---
 
-# SRP: 単一責務の原則（Single Responsibility Principle）
+
+# The Clean Architecture（≠Clean Architecture）の誤解
+
+---
+
+# 親の顔より見た図
+本日９スライド振り２回目の登場
+
+<img src="https://blog.cleancoder.com/uncle-bob/images/2012-08-13-the-clean-architecture/CleanArchitecture.jpg" class="h-90 rounded shadow" alt="CleanArchitecture" />
+
+「Clean Architecture」の22章の中で例示されているLayered Architecture
+
+---
+
+# 誤解されている内容
+使い勝手が良い（具体的且つ魅力的で映える）図でやたら独り歩きしている感
+
+* この通りに実装するのが正解だと思われすぎ  
+Clean Architectureの具体例として挙げられているだけ
+* そもそも4層という決めもない  
+4つ以外は認めないというルールはないと明記されている
+* MVC1のベースに近い構成案で最近のWebアプリケーションの構成と乖離がある  
+そもそもWebアプリケーション以外 [^1] も想定している図なので盲信すると危険！
+* EntitiesはDDD的にはDomain Model  
+* Interface AdaptorはDIPの為だけにあるのではない  
+データ変換の責務も持つ
+
+[^1]: 同心円の外側のDevices, UI, External Interfacesがソレ<br />それぞれ、キーボードやNativeアプリ(GUI)、CLI、メールやイベント・キューとかもありそう
+
+<!--
+PresenterでOutput BoundaryはMVC2なら要らないと思います
+-->
+
+---
+
+# 本質的な２つルール
+
+<Transform :scale="0.8">
+<img src="https://blog.cleancoder.com/uncle-bob/images/2012-08-13-the-clean-architecture/CleanArchitecture.jpg" class="h-90 rounded shadow" alt="CleanArchitecture" />
+
+<br />
+
+* 依存の方向は外側から内側のレイヤーにのみ向ける
+* 制御の流れと依存の向きは依存性逆転の原則で分離してコントロールする
+
+</Transform>
+
+<box 
+  left="70px"
+  top="225px"
+  width="135px"
+  height="45px"
+  borderColor="red"
+  borderWidth="3px"
+  borderStyle="solid"
+  backgroundColor="#44ffd233"
+  />
+
+<arrow x1="110" y1="410" x2="110" y2="275" color="red" width="3" arrowSize="2" />
+
+---
+
+# 各層（レイヤー間）の関係性
+円の内側は高レイヤーで外側は低レイヤーとする
+
+
+|レイヤー<br />位置|抽象度 [^1]|重要度[^2]|安定度[^3]|具体的な<br />コンポーネント|役割|
+|---|---|---|---|---|---|
+|内側|高い<br />（抽象）|高い|高い|ビジネスルール<br />ドメインモデル|ソフトウェアの本質的な部分や目的を表すもの|
+|外側|低い<br />（具象）|低い|低い|データソース<br />（データベース,Web API）|ソフトウェアの詳細な部分や手段を表すもの|
+
+[^1]: 抽象度とは、コンポーネントが具体的な実装や詳細から独立している程度を表す指標
+[^2]: 重要度とは、システムが解決しようとしている課題や問題領域の関心事にどれだけ適合しているかを表す指標。<br />重要度が高い場合に修正の影響範囲が広くなる
+[^3]: 安定度とは、修正されにくい度合い又は、依存性関係が少なく他のモジュールの修正の影響を受けづらい度合い
+
+
+<style>
+.slidev-layout {
+  font-size: 0.9em;
+}
+</style>
+
+---
+layout: center
+transition: fade
+---
+
+# 抽象度と重要度と安定度は連動する
+
+---
+layout: center
+transition: fade
+---
+
+# 🙅‍♀️
+
+<v-click>
+
+違う、そうじゃない  
+
+</v-click>
+
+<v-click>
+
+結果からはそう見えるけれど..
+
+</v-click>
+
+<style>
+.slidev-vclick-target {
+  transition: opacity 200ms ease;
+  text-align: center;
+  font-size: 3em;
+  line-height: 1;
+}
+</style>
+
+---
+layout: center
+---
+
+# 🙆‍♀　重要度に対して抽象度を調整し安定度をコントロールする
+
+---
+
+# 各層（レイヤー間）の <div class="mention">目指す</div>関係性
+円の内側は高レイヤーで外側は低レイヤーとする
+
+|レイヤー<br />位置|抽象度 [^1]|重要度[^2]|安定度[^3]|具体的な<br />コンポーネント|役割|
+|---|---|---|---|---|---|
+|内側|高い<br />（抽象）|高い|高い|ビジネスルール<br />ドメインモデル|ソフトウェアの本質的な部分や目的を表すもの|
+|外側|低い<br />（具象）|低い|低い|データソース<br />（データベース,Web API）|ソフトウェアの詳細な部分や手段を表すもの|
+
+[^1]: 抽象度とは、コンポーネントが具体的な実装や詳細から独立している程度を表す指標
+[^2]: 重要度とは、システムが解決しようとしている課題や問題領域の関心事にどれだけ適合しているかを表す指標。<br />重要度が高い場合に修正の影響範囲が広くなる
+[^3]: 安定度とは、修正されにくい度合い又は、依存性関係が少なく他のモジュールの修正の影響を受けづらい度合い
+
+<v-click>
+  <box 
+    left="50px"
+    top="80px"
+    width="500px"
+    height="45px"
+    borderColor="red"
+    borderWidth="3px"
+    borderStyle="solid"
+    backgroundColor="#44ffd233"
+    textColor="red"
+    title="重要度の高いものコアとし、中心に据える"
+    />
+</v-click>
+
+<style>
+.slidev-layout h2 {
+  font-size: 0.6rem !important;
+  line-height: 1 !important;
+}
+.slidev-layout {
+  font-size: 0.9em;
+}
+</style>
+
+---
+
+# SDP: 安定依存の原則
+Stable Dependencies Principle
+
+パッケージ設計の原則の一つで、パッケージの依存は常により安定したパッケージに向くべきであるという原則
+
+安定したレイヤーに依存しないといけない  
+不安定なレイヤーに依存すると、その依存しているレイヤーが不安定になる
+
+<v-click>
+
+<div class="fusen-003">
+クリーンアーキテクチャでは、重量度が一番高いもの=ドメインモデルとしている<br />
+ドメインモデルの設計を安定させるという考え方<br />
+技術的に詳細で不安定であるデータソースにドメインが依存するのはおかしい！
+</div>
+
+</v-click>
 
 
 ---
