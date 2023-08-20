@@ -3,3 +3,26 @@
   font-weight: bold;
   display: inline-block;
 }
+
+.fusen-003 {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 2em 2.2em;
+  border-left: 27px solid #2589d0;
+  background-color: #a9ceec;
+  color: #333333;
+}
+
+.fusen-003::before {
+  position: absolute;
+  bottom: -5px;
+  right: 7px;
+  z-index: -1;
+  transform: rotate(5deg);
+  width: 70%;
+  height: 50%;
+  background-color: #d0d0d0;
+  content: "";
+  filter: blur(4px);
+}
