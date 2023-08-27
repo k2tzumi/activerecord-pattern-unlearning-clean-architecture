@@ -108,6 +108,21 @@ h1 {
 layout: default
 ---
 
+# 学びほぐす「アンラーニング」とは？
+What's unlearning?
+
+<blockquote>
+        <p>既得の知識・習慣を捨てること。</p>
+        <p>環境変化の激しい現代社会を生き抜くために、過去の経験にとらわれないよう、意識的に学習知識を捨て去ること。</p>
+</blockquote>
+
+[コトバンク（デジタル大辞泉）より](https://kotobank.jp/word/%E3%82%A2%E3%83%B3%E3%83%A9%E3%83%BC%E3%83%8B%E3%83%B3%E3%82%B0-178709)
+
+
+---
+layout: default
+---
+
 # ActiveRecordパターンとは？
 
 皆んな大好きActiveRecordパターン  
@@ -440,12 +455,14 @@ Active Recordは、オブジェクトとデータベースのマッピングは�
 
 ---
 layout: center
+transition: fade
 ---
 
 # ActiveRecordはもの凄くリッチなパターン
 
 ---
 layout: center
+transition: fade
 ---
 
 # アーキテクチャパターンとしての向き・不向きがある
@@ -572,11 +589,15 @@ image: https://m.media-amazon.com/images/I/51LkcwTMC8L._SX387_BO1,204,203,200_.j
 # SOLIDの原則
 各設計の原則の頭文字
 
+<Transform :scale="1.5">
+
 * S: 単一責任の原則（SRP: Single Responsibility Principle）
 * O: 開放閉鎖の原則（OCP: Open-Closed Principle）
 * L: リスコフの置換原則（LSP: Liskov Substitution Principle）
 * I: インターフェース分離の原則（ISP: Interface Segregation Principle）
 * D: 依存性逆転の原則（DIP: Dependency Inversion Principle）
+
+</Transform>
 
 ---
 
@@ -673,7 +694,8 @@ Dependency Inversion Principle
 
 <div class="fusen-003">
 クリーンアーキテクチャでは、内側の層が外側の層に依存しないように設計される<br />
-モジュールは抽象に依存するようにし、これにより、内側のレイヤーは外側のレイヤーの変更に影響されなくなる
+モジュールは抽象に依存するようにし、これにより、内側のレイヤーは外側のレイヤーの変更に影響されなくなる<br />
+Repositoryパターンによってドメインは永続化技術の詳細から隔離される
 </div>
 
 </v-click>
@@ -705,7 +727,7 @@ Clean Architectureの具体例として挙げられているだけ
 4つ以外は認めないというルールはないと明記されている
 * MVC1のベースに近い構成案で最近のWebアプリケーションの構成と乖離がある  
 そもそもWebアプリケーション以外 [^1] も想定している図なので盲信すると危険！
-* EntitiesはDDD的にはDomain Model  
+* EntitiesはDDD的にはDomain Model   
 * Interface AdaptorはDIPの為だけにあるのではない  
 データ変換の責務も持つ
 
@@ -724,10 +746,12 @@ PresenterでOutput BoundaryはMVC2なら要らないと思います
 
 <br />
 
-* 依存の方向は外側から内側のレイヤーにのみ向ける
+* 依存の方向は外側から内側のレイヤーにのみ向ける[^1]
 * 制御の流れと依存の向きは依存性逆転の原則で分離してコントロールする
 
 </Transform>
+
+[^1]:依存関係は隣接するレイヤー間のみに限定されるわけではないので注意
 
 <box 
   left="70px"
@@ -751,7 +775,7 @@ PresenterでOutput BoundaryはMVC2なら要らないと思います
 |レイヤー<br />位置|抽象度 [^1]|重要度[^2]|安定度[^3]|具体的な<br />コンポーネント|役割|
 |---|---|---|---|---|---|
 |内側|高い<br />（抽象）|高い|高い|ビジネスルール<br />ドメインモデル|ソフトウェアの本質的な部分や目的を表すもの|
-|外側|低い<br />（具象）|低い|低い|データソース<br />（データベース,Web API）|ソフトウェアの詳細な部分や手段を表すもの|
+|外側|低い<br />（具象）|低い|低い|データソース<br />（データベース,Web API）|ソフトウェアの技術的な詳細な部分や手段を表すもの|
 
 [^1]: 抽象度とは、コンポーネントが具体的な実装や詳細から独立している程度を表す指標
 [^2]: 重要度とは、システムが解決しようとしている課題や問題領域の関心事にどれだけ適合しているかを表す指標。<br />重要度が高い場合に修正の影響範囲が広くなる
@@ -770,6 +794,12 @@ transition: fade
 ---
 
 # 抽象度と重要度と安定度は連動する
+
+<v-click>
+
+。。。本当？
+
+</v-click>
 
 ---
 layout: center
@@ -806,6 +836,8 @@ layout: center
 # 🙆‍♀　重要度に対して抽象度を調整し安定度をコントロールする
 
 ---
+transition: fade
+---
 
 # 各層（レイヤー間）の <div class="mention">目指す</div>関係性
 円の内側は高レイヤーで外側は低レイヤーとする
@@ -813,37 +845,42 @@ layout: center
 |レイヤー<br />位置|抽象度 [^1]|重要度[^2]|安定度[^3]|具体的な<br />コンポーネント|役割|
 |---|---|---|---|---|---|
 |内側|高い<br />（抽象）|高い|高い|ビジネスルール<br />ドメインモデル|ソフトウェアの本質的な部分や目的を表すもの|
-|外側|低い<br />（具象）|低い|低い|データソース<br />（データベース,Web API）|ソフトウェアの詳細な部分や手段を表すもの|
+|外側|低い<br />（具象）|低い|低い|データソース<br />（データベース,Web API）|ソフトウェアの技術的な詳細な部分や手段を表すもの|
 
 [^1]: 抽象度とは、コンポーネントが具体的な実装や詳細から独立している程度を表す指標
 [^2]: 重要度とは、システムが解決しようとしている課題や問題領域の関心事にどれだけ適合しているかを表す指標。<br />重要度が高い場合に修正の影響範囲が広くなる
 [^3]: 安定度とは、修正されにくい度合い又は、依存性関係が少なく他のモジュールの修正の影響を受けづらい度合い
 
-<v-click>
-  <box 
-    left="50px"
-    top="80px"
-    width="500px"
-    height="45px"
-    borderColor="red"
-    borderWidth="3px"
-    borderStyle="solid"
-    backgroundColor="#44ffd233"
-    textColor="red"
-    title="重要度の高いものコアとし、中心に据える"
-    />
-</v-click>
-
 <style>
-.slidev-layout h2 {
-  font-size: 0.6rem !important;
-  line-height: 1 !important;
-}
 .slidev-layout {
   font-size: 0.9em;
 }
 </style>
 
+---
+transition: fade
+---
+
+# 各層（レイヤー間）の <div class="mention">目指す</div>関係性
+<div class="mention">重要度の高いものコアとし、中心に据える</div>
+
+|レイヤー<br />位置|抽象度 [^1]|重要度[^2]|安定度[^3]|具体的な<br />コンポーネント|役割|
+|---|---|---|---|---|---|
+|内側|高い<br />（抽象）|高い|高い|ビジネスルール<br />ドメインモデル|ソフトウェアの本質的な部分や目的を表すもの|
+|外側|低い<br />（具象）|低い|低い|データソース<br />（データベース,Web API）|ソフトウェアの技術的な詳細な部分や手段を表すもの|
+
+[^1]: 抽象度とは、コンポーネントが<div class="mention">他の具体的な実装や詳細から独立させた度合い</div>の指標
+[^2]: 重要度とは、システムが解決しようとしている課題や問題領域の関心事にどれだけ適合しているかを表す指標。<br /><div class="mention">高い ＝ 柔軟性と保守性が求められるコアとなるもの</div>
+[^3]: 安定度とは、修正されにくい度合い又は、<div class="mention">依存性関係を少なくし、他のモジュールの修正に閉じている状態</div>の度合い
+
+<style>
+.slidev-layout {
+  font-size: 0.9em;
+}
+</style>
+
+---
+transition: fade
 ---
 
 # SDP: 安定依存の原則
@@ -858,12 +895,213 @@ Stable Dependencies Principle
 
 <div class="fusen-003">
 クリーンアーキテクチャでは、重量度が一番高いもの=ドメインモデルとしている<br />
-ドメインモデルの設計を安定させるという考え方<br />
-技術的に詳細で不安定であるデータソースにドメインが依存するのはおかしい！
+ドメインモデルの設計を長期的に安定させるという考え方<br />
+技術的な詳細で不安定なデータソースにドメインが依存するのはおかしい！
 </div>
 
 </v-click>
 
+---
+
+# 不安定なレイヤーから切り離す手法
+制御の流れと依存の向きは連動してしまう
+
+  * 制御のフロー  
+```mermaid
+graph LR
+  Application -->Domain
+  Domain -->Infrastructure
+```
+  * 依存の向き  
+```mermaid
+graph LR
+  Application -.->Domain
+  Domain -.->|x抽象が具象に依存している| Infrastructure
+```
+
+<div class="box-text-memo">
+※説明を単純にする為にレイヤーを3層にした例<br />
+PoEAA的に以下の関心事に対応<br />
+Application: Web Presentation<br />
+Domain: Domain Logic<br />
+Infrastructure: Data Source<br />
+</div>
+
+---
+transition: fade
+---
+
+# 不安定なレイヤーから切り離す手法
+ドメインモデルの永続化するのに具象に依存させない
+
+* DIP依存性逆転の原則  
+インターフェースを定義しドメイン層は永続化技術の詳細から隔離され、抽象に依存させる  
+
+```mermaid
+---
+title: Repositoryパターン
+---
+classDiagram
+    direction LR
+    class Application
+    class Domain
+    class Repository {
+      <<interface>>
+    }
+    class Infrastructure
+    Application ..> Domain
+    Domain ..> Repository
+    Repository <|.. RDBRepository
+    RDBRepository <.. Infrastructure
+    Repository <|.. RestRepository
+    RestRepository <.. Infrastructure
+```
+---
+layout: center
+---
+
+# これで本当にCleanといえるのか？
+
+---
+
+# ドメインが持つ依存を排除し抽象度を上げる
+ドメインモデルをもっと安定させる
+
+* アプリケーションサービス  
+アプリケーションサービスは、ドメイン層とプレゼンテーション層の間に位置し、ドメインオブジェクトやレポジトリなどを利用して、アプリケーションの要求を満たす。  
+
+```mermaid
+---
+title: Application Layer内を細分化
+---
+classDiagram
+    direction LR
+    class Controller
+    class UseCase
+    class Domain
+    class Repository {
+      <<interface>>
+    }
+    class Infrastructure
+    Controller ..> UseCase
+    UseCase ..> Repository
+    UseCase　..> Domain
+    Repository ..> Domain
+    Repository <|.. RDBRepository
+    RDBRepository <.. Infrastructure
+    Repository <|.. RestRepository
+    RestRepository <.. Infrastructure
+```
+
+<v-click>
+
+<box 
+  left="460px"
+  top="265px"
+  width="160px"
+  height="100px"
+  borderColor="red"
+  borderWidth="3px"
+  borderStyle="solid"
+  backgroundColor="#44ffd233"
+  />
+
+<box 
+  left="620px"
+  top="265px"
+  width="150px"
+  height="100px"
+  textColor="red"
+  title="完全に独立"
+  />
+
+</v-click>
+
+---
+layout: center
+transition: slide-up
+---
+
+# レイヤー間だけでなく、クラス（コンポーネント）間にもSOLID・パッケージ設計の原則は適用可能
+Clean Codeという考え方
+
+---
+layout: image-right
+image: https://svgsilh.com/svg/2022412.svg
+---
+
+# ActiveRecordパターンの呪縛のまとめ
+
+---
+
+# ActiveRecordパターンの呪縛（と原因）
+
+* ドメインモデル（クラスとプロパティ）とテーブル（テーブルとカラム）を1:1にしないといけない  
+データの永続化とドメインの振る舞いが1つにするという思い込み
+* 先にデータモデリングを行ってその構造や制約を定義するだけ  
+それが一番はやくて黄金パターンだという成功体験（シンプルなドメインという前提条件を無視しがち）
+* レコードの更新（削除も）簡単にできるという思い込み  
+Active Record では、ドメインオブジェクトがレコードとして表現されるため、レコードを更新することが簡単にできるように見える（表面的な操作としては）
+
+---
+
+# 学びほぐし事例<material-symbols-counter-1 />
+
+* テーブルの定義がそのままDomain modelのプロパティになっている
+
+---
+
+# 学びほぐし事例<material-symbols-counter-1 />の問題点
+結果として同じになるケースも無いことも無いけれど
+
+* テーブル設計 != モデル設計  
+論理設計のモデル設計と物理設計のERD設計を同じものだと考えてしまっている[^1]  
+そもそもInfrastructure層の関心ごとをモデルに持ち込みたくないのに。。  
+* Valueオブジェクト[^2]や集約[^3]が表現されていない[^4]  
+全てprimitiveな型になっている場合は要注意
+* テーブルの正規化対応できない  
+関連モデルとしてモデル定義してしまうと、データ構造が露出してしまう
+
+[^1]: 日本語論理名を英語に翻訳するだけとか。。
+[^2]: 同一性を持たず、属性が同じであれば同じものとして扱われるオブジェクト。例えば、日付や金額など
+[^3]: 一貫性の境界内にある関連するドメインオブジェクトのグループ
+[^4]: 振る舞いや制約がない状態。若しくは分散してしまっている
+
+---
+
+# 学びほぐし事例<material-symbols-counter-1 />の処方
+
+* まずはドメインに向き合いましょう  
+  1. ドメインの問題領域を理解する  
+  2. ユビキタス言語を定義する  
+  3. ドメインオブジェクトを識別する  
+  識別したドメインオブジェクトの種類を決める。  
+  こでValueオブジェクトや集約を識別し、振る舞いや関係（強調・制約）も洗い出しする
+
+---
+
+# ActiveRecord系ライブラリとの向き合い方
+ドメインロジックをドメインモデルに持たせている前提
+
+* Infrastructure層でRepositoryを実装したクラスでActiveRecordは使っても問題ないハズ [^1]  
+ORマッパー・クエリービルダとして使う
+* ただしドメインオブジェクトをActiveRecordに変換する処理が必要  
+ドメインオブエジェクトではなくDTO（Data Transfer Object）, DPO（Data Persistence Object）の場合もあり [^2]
+
+
+[^1]: 本質的にはData Mapperでオブジェクトとテーブルのマッピングしたほうが良さそう。但しマッピングのメタデータをDomain Modelに書く（Attributeやアノテーション定義する）と関心事が混ざるので悩ましい
+[^2]: DPOはRepositoryのインターフェース側に定義させる
+
+---
+
+# Bobおじさんから一言
+
+[Clean Coder "Active Record vs Objects" より](https://sites.google.com/site/unclebobconsultingllc/active-record-vs-objects)
+
+<blockquote>
+<p>So applications built around ActiveRecord are applications built around data structures. And applications that are built around data structures are procedural—they are not object oriented. The opportunity we miss when we structure our applications around Active Record is the opportunity to use object oriented design.</p>
+<p>つまり、ActiveRecordを中心に構築されたアプリケーションは、データ構造を中心に構築されたアプリケーションということになる。データ構造を中心に構築されたアプリケーションは手続き型であり、オブジェクト指向ではない。ActiveRecordを中心にアプリケーションを構成すると、オブジェクト指向設計を使う機会を逃してしまう。</p>
+</blockquote>
 
 ---
 layout: end
