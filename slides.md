@@ -124,7 +124,7 @@ transition: fade-out
 
 写真撮影、SNSでの実況について
 
-登壇者の励みになるので是非とも盛り上げて頂けると助かります mm  
+登壇者の励みになるので是非ともご意見やご感想など、フィードバック頂けると助かります mm  
 あとでスライドを公開します
 
 ::left::
@@ -167,9 +167,10 @@ layout: two-cols-header
 ### 話さないこと
 
 - 具体的な実装例
-- 実践的なヒントやテクニック
+- 実践的なヒントやテクニック  
+変化の必要性をお伝えします
 - クリーンアーキテクチャへの移行手法  
-心構えについてお伝えできればと思います
+新しい価値観や行動様式についてお伝えします
 - オブジェクト指向の基本的な概念や用語
 
 ::right::
@@ -1135,8 +1136,11 @@ image: https://svgsilh.com/svg/2022412.svg
 # ActiveRecordパターンの呪縛のまとめ
 
 ---
+transition: fade
+---
 
-# ActiveRecordパターンの呪縛（と原因）
+# ActiveRecordパターンの呪縛
+認知バイアス多め
 
 * ドメインモデル（クラスとプロパティ）とテーブル（テーブルとカラム）を1:1にしないといけない  
 データの永続化とドメインの振る舞いを1つにするという思い込み
@@ -1148,6 +1152,12 @@ image: https://svgsilh.com/svg/2022412.svg
 Active Record では、ドメインオブジェクトがレコードとして表現されるため、レコードを更新することが簡単にできるように見える（表面的な操作としては）
 
 ---
+layout: fact
+---
+
+# ああ・・・クセになってんだ
+
+---
 
 # 学びほぐし事例<material-symbols-counter-1 />
 
@@ -1155,12 +1165,12 @@ Active Record では、ドメインオブジェクトがレコードとして表
 
 ---
 
-# 学びほぐし事例<material-symbols-counter-1 />の問題点
+# 学びほぐし事例<material-symbols-counter-1 />の変革の必要性
 ActiveRecordは必ず1対1にしていたけれど
 
 * テーブル設計 != モデル設計  
 論理設計のモデル設計と物理設計のERD設計を同じものだと考えてしまっている[^1]  
-そもそもInfrastructure層の関心ごとをモデルに持ち込みたくないのに。。  
+そもそもInfrastructure層の関心ごとをモデルに持ち込みたくない！  
 * Valueオブジェクト[^2]や集約[^3]が表現されていない[^4]  
 全てprimitiveな型になっている場合は要注意
 * テーブルの正規化対応できない  
@@ -1173,7 +1183,7 @@ ActiveRecordは必ず1対1にしていたけれど
 
 ---
 
-# 学びほぐし事例<material-symbols-counter-1 />の処方
+# 学びほぐし事例<material-symbols-counter-1 />のブレークスルー
 ドメインファーストな設計をしましょう。永続化はレイヤーを分けて考えましょう
 
 * まずはドメインに向き合いましょう  
@@ -1196,7 +1206,7 @@ ActiveRecordは必ず1対1にしていたけれど
 
 ---
 
-# 学びほぐし事例<material-symbols-counter-2 />の問題点
+# 学びほぐし事例<material-symbols-counter-2 />の変革の必要性
 ActiveRecordはミュータブルなモデル
 
 * 副作用が発生する可能性がある  
@@ -1207,7 +1217,7 @@ ActiveRecordはミュータブルなモデル
 
 ---
 
-# 学びほぐし事例<material-symbols-counter-2 />の処方
+# 学びほぐし事例<material-symbols-counter-2 />のブレークスルー
 複数ユースケースで同じプロパティの更新があったとして同じイベントと言えるか？
 
 * イミュータブルなモデルにしましょう  
@@ -1223,7 +1233,7 @@ ActiveRecordはミュータブルなモデル
 
 ---
 
-# 学びほぐし事例<material-symbols-counter-3 />の問題点
+# 学びほぐし事例<material-symbols-counter-3 />の変革の必要性
 ActiveRecordは制約違反があってもオブジェクト自体が存在できてしまう
 
 * 制約違反したオブジェクトが存在できてしまう  
@@ -1242,7 +1252,7 @@ validメソッドの呼び忘れも発生する
 
 ---
 
-# 学びほぐし事例<material-symbols-counter-3 />の処方
+# 学びほぐし事例<material-symbols-counter-3 />のブレークスルー
 イミュータブルな設計とセットでコンストラクタに制約を実装する
 
 * 適切にコンストラクタに制約を定義しましょう  
@@ -1258,7 +1268,7 @@ validメソッドの呼び忘れも発生する
 
 ---
 
-# 学びほぐし事例<material-symbols-counter-4 />の問題点
+# 学びほぐし事例<material-symbols-counter-4 />の変革の必要性
 ActiveRecordではテーブルとの関連は原則1:1。分けれなくもないけれどあまりやらない
 
 * データの正規化したデータをうまく扱えない  
@@ -1272,7 +1282,7 @@ ActiveRecordではテーブルとの関連は原則1:1。分けれなくもな�
 
 ---
 
-# 学びほぐし事例<material-symbols-counter-4 />の処方
+# 学びほぐし事例<material-symbols-counter-4 />のブレークスルー
 
 * ReadオブジェクトとWriteオブジェクトを分ける  
 コマンド・クエリ分離の原則（CQS）に従う
@@ -1286,7 +1296,7 @@ Infrastructure層でデータの新規登録・更新用のメソッドが1つ
 
 ---
 
-# 学びほぐし事例<material-symbols-counter-5 />の問題点
+# 学びほぐし事例<material-symbols-counter-5 />の変革の必要性
 ActiveRecordにはsaveメソッドがある。便利メソッドが多すぎてDRYの罠に嵌る
 
 * ドメインのイベントを見落としている
@@ -1294,7 +1304,7 @@ ActiveRecordにはsaveメソッドがある。便利メソッドが多すぎてD
 
 ---
 
-# 学びほぐし事例<material-symbols-counter-5 />の処方
+# 学びほぐし事例<material-symbols-counter-5 />のブレークスルー
 
 * イミュータブルデータモデルで設計してみる  
 更新と削除を行わないテーブル設計  
@@ -1315,7 +1325,7 @@ ActiveRecordにはsaveメソッドがある。便利メソッドが多すぎてD
 
 ---
 
-# 学びほぐし事例<material-symbols-counter-6 />の問題点
+# 学びほぐし事例<material-symbols-counter-6 />の変革の必要性
 ActiveRecordはLazy Loadが有効になっていたけれど
 
 * レイヤーを分離した際に戻り値がEager Loadになってしまう  
@@ -1323,7 +1333,7 @@ Lazy Loadでエンティティを返すにはテクニックがいる
 
 ---
 
-# 学びほぐし事例<material-symbols-counter-6 />の処方
+# 学びほぐし事例<material-symbols-counter-6 />のブレークスルー
 
 * WIP
 
@@ -1364,6 +1374,22 @@ image: https://source.unsplash.com/collection/94734566/960x1080
 # まとめ
 
 ---
+layout: two-cols-header
+---
+
+# 設計パターンの適用条件
+再利用可能なケース
+
+* ActiveRecordの場合
+  - データベースのテーブルとオブジェクトの構造がほぼ同じ
+  - データベースの操作が単純
+  - ビジネスロジックが複雑でない
+* クリーンアーキテクチャの場合
+  - ビジネスロジックやドメイン知識が重要
+  - 外部リソースやフレームワークに依存しないようにしたい
+  - 変更や追加に柔軟に対応したい
+
+---
 
 # ActiveRecordの呪縛から逃れるには？
 
@@ -1377,22 +1403,6 @@ image: https://source.unsplash.com/collection/94734566/960x1080
 
 * 複雑性に立ち向かう
 * 分散システムをターゲットにしていく
-
----
-layout: two-cols-header
----
-
-# それぞれの設計パターンの適用条件
-再利用可能なケース
-
-* ActiveRecordの場合
-  - データベースのテーブルとオブジェクトの構造がほぼ同じ
-  - データベースの操作が単純
-  - ビジネスロジックが複雑でない
-* クリーンアーキテクチャの場合
-  - ビジネスロジックやドメイン知識が重要
-  - 外部リソースやフレームワークに依存しないようにしたい
-  - 変更や追加に柔軟に対応したい
 
 ---
 layout: end
