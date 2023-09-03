@@ -110,9 +110,14 @@ transition: fade-out
 ---
 
 # 日々ちょうぜつ分厚い本と向き合っています
-圧巻の1.5K頁オーバー。2ちょうぜつぐらい。3年に一回、大改訂（大改定）があります。
+圧巻の1.5K頁オーバー。2.2ちょうぜつぐらい。3年に一回、大改訂（大改定）があります。
 
 <img src="/ISBN-978-4805887332.png" />
+
+<!--
+レセプト業務の基盤システムを作っています。  
+先月、ツナギメエフエムの [Ep.52](https://listen.style/p/tsunagimefm/tnjsz79v) でゲスト参加して所属会社や業務のことを話たので興味のある方は視聴してみてください
+-->
 
 ---
 layout: two-cols-header
@@ -191,9 +196,8 @@ transition: slide-up
 
 # 本セッションのゴール
 
-
-- WIP
-
+- ActiveRecordパターンでの開発経験者が初めてクリーンアーキテクチャを経験する際にアンチパターンに陥らない為の前提知識を得ること
+- クリーンアーキテクチャに興味があり調べたけれど、よくわからん！となった人に採用のメリットや概念が理解できること
 
 ---
 layout: default
@@ -497,7 +501,7 @@ layout: center
 transition: fade
 ---
 
-# 🤔
+# Data Source? 🤔
 
 ---
 transition: fade
@@ -571,7 +575,7 @@ Active Recordパターンでは、テーブルとクラス、行とインスタ�
 <v-click>
 
 <div class="fusen-003">
-上記の前提が守られている場合は非常に強力に機能する！<br />  
+上記の前提（適用条件）が守られている場合は非常に強力に機能する！<br />  
 強力すぎるが故に、その前提を保つことに注力するように意識が向くようになる<br />  
 </div>
 
@@ -694,13 +698,19 @@ image: https://m.media-amazon.com/images/I/51LkcwTMC8L._SX387_BO1,204,203,200_.j
 
 <Transform :scale="1.5">
 
-* S: 単一責任の原則（SRP: Single Responsibility Principle）
+* <div class="mention">S: 単一責任の原則（SRP: Single Responsibility Principle）</div>
 * O: 開放閉鎖の原則（OCP: Open-Closed Principle）
 * L: リスコフの置換原則（LSP: Liskov Substitution Principle）
 * I: インターフェース分離の原則（ISP: Interface Segregation Principle）
-* D: 依存性逆転の原則（DIP: Dependency Inversion Principle）
+* <div class="mention">D: 依存性逆転の原則（DIP: Dependency Inversion Principle）</div>
 
 </Transform>
+
+<!--
+5つ原則がありますが、重要なのは最初のSと最後のDになります。  
+時間がないので本日はその2つのみ説明します。  
+資料が後で公開されるので、後でご参照ください。
+-->
 
 ---
 
@@ -1297,7 +1307,7 @@ Infrastructure層でデータの新規登録・更新用のメソッドが1つ
 ---
 
 # 学びほぐし事例<material-symbols-counter-5 />の変革の必要性
-ActiveRecordにはsaveメソッドがある。便利メソッドが多すぎてDRYの罠に嵌る
+ActiveRecordでCRUDが簡単にでき、最新状態を常に上書きしていたけれど
 
 * ドメインのイベントを見落としている
 * データの新規登録時の制約と更新時の制約が異なるケースがある
@@ -1326,10 +1336,14 @@ ActiveRecordにはsaveメソッドがある。便利メソッドが多すぎてD
 ---
 
 # 学びほぐし事例<material-symbols-counter-6 />の変革の必要性
-ActiveRecordはLazy Loadが有効になっていたけれど
+ActiveRecordはデフォルトでLazy Loadが前提になっているけれど
 
-* レイヤーを分離した際に戻り値がEager Loadになってしまう  
+* データの関連を適切にクエリとして定義する必要がある  
+適切にクエリとして表現しないと、クエリ間 [^1] でもN+1が多発する
+* レイヤーを分離した際に戻り値がEager Loadになる  
 Lazy Loadでエンティティを返すにはテクニックがいる
+
+[^1]:個々のクエリを再利用してしまい、最終的にはAPIでもN+1で呼び出される危険性がある
 
 ---
 
@@ -1403,6 +1417,15 @@ layout: two-cols-header
 
 * 複雑性に立ち向かう
 * 分散システムをターゲットにしていく
+
+---
+
+# 参考資料＆紹介した記事など
+
+* [ツナギメエフエム Ep.52](https://listen.style/p/tsunagimefm/tnjsz79v)
+* [Patterns of Enterprise Application Architecture / Martin Fowler's Bliki (ja)](https://bliki-ja.github.io/pofeaa/)
+* [TM（T字形ER）によるモデリング](https://www.sea.jp/Events/symposium/ss2009/contents/07-Modeling/ss2009-modeling-slide-tokimoto.pdf)
+
 
 ---
 layout: end
