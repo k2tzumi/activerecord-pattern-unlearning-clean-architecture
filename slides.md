@@ -621,7 +621,7 @@ ActiveRecordパターンは敢えてレイヤーを分けずに密結合にし�
 * ひとつのことをうまくこなすように分離する  
 責務を明確にし、複雑性の排除と隠蔽を行う
 * テストをしやすくする  
-Mockしやすくなる。DBに依存しないテストになる
+Mockしやすくなる。DBに依存しないテストになる  [^1]
 * コードの可読性が上がり、認知負荷がさがる  
 
 <br />
@@ -634,6 +634,7 @@ Mockしやすくなる。DBに依存しないテストになる
 
 </v-click>
 
+[^1]: ActiveRecordはDB依存がありミディアムテストになってしまう
 
 ---
 layout: center
@@ -823,7 +824,7 @@ layout: center
 ---
 
 # 親の顔より見た図
-本日９スライド振り２回目の登場
+本日10ページぶり2回目の登場
 
 <img src="https://blog.cleancoder.com/uncle-bob/images/2012-08-13-the-clean-architecture/CleanArchitecture.jpg" class="h-90 rounded shadow" alt="CleanArchitecture" />
 
@@ -1165,13 +1166,20 @@ Active Record では、ドメインオブジェクトがレコードとして表
 layout: fact
 ---
 
-# ああ・・・クセになってんだ
+# ああ・・・
+# クセになってんだ
 
 ---
+layout: fact
+---
 
-# 学びほぐし事例<material-symbols-counter-1 />
+# 学びほぐし事例集
 
-* テーブルの定義がそのままDomain modelのプロパティになっている
+---
+layout: fact
+---
+
+# <material-symbols-counter-1 />テーブル定義 = Domain modelのプロパティ
 
 ---
 
@@ -1208,11 +1216,11 @@ ActiveRecordは必ず1対1にしていたけれど
 -->
 
 ---
+layout: fact
+---
 
-# 学びほぐし事例<material-symbols-counter-2 />
-
-* モデルにsetterが存在する  
-もしくはプロパティがpublicになっている
+# <material-symbols-counter-2 />モデルにsetterが存在  
+プロパティが書き換え可能
 
 ---
 
@@ -1236,10 +1244,10 @@ ActiveRecordはミュータブルなモデル
   イミュータブルなモデルでコンストラクタに制約が定義されていれば、各種イベントで状態が変化しても制約が必ず有効になります
 
 ---
+layout: fact
+---
 
-# 学びほぐし事例<material-symbols-counter-3 />
-
-* コンストラクタになにも制約を定義していない  
+# <material-symbols-counter-3 />コンストラクタに制約がない  
 
 ---
 
@@ -1271,10 +1279,11 @@ validメソッドの呼び忘れも発生する
 * イミュータブルなモデルにしましょう  
 
 ---
+layout: fact
+---
 
-# 学びほぐし事例<material-symbols-counter-4 />
-
-* データの永続化と読み込みの際のモデルが同じになっている  
+# <material-symbols-counter-4 />読み込みと書き込みのモデルが同じ
+データの永続化と読み込みの両方に同じモデルを使用する  
 
 ---
 
@@ -1298,11 +1307,11 @@ ActiveRecordではテーブルとの関連は原則1:1。分けれなくもな�
 コマンド・クエリ分離の原則（CQS）に従う
 
 ---
+layout: fact
+---
 
-# 学びほぐし事例<material-symbols-counter-5 />
-
-* ユースケース毎に適切なコマンドが作成されていない  
-Infrastructure層でデータの新規登録・更新用のメソッドが1つ
+# <material-symbols-counter-5 />ユースケース毎に適切なコマンドが作成されていない  
+データの新規登録と更新の両対応のメソッドが定義されている
 
 ---
 
@@ -1328,19 +1337,20 @@ ActiveRecordでCRUDが簡単にでき、最新状態を常に上書きしてい�
 </div>
 
 ---
+layout: fact
+---
 
-# 学びほぐし事例<material-symbols-counter-6 />
+# <material-symbols-counter-6 />ユースケース毎に適切な粒度のクエリが作成されていない 
 
-* ユースケース毎に適切な粒度のクエリが作成されていない  
 
 ---
 
 # 学びほぐし事例<material-symbols-counter-6 />の変革の必要性
 ActiveRecordはデフォルトでLazy Loadが前提になっているけれど
 
-* データの関連を適切にクエリとして定義する必要がある  
+* データの関連を適切にクエリとして表現する必要がある  
 適切にクエリとして表現しないと、クエリ間 [^1] でもN+1が多発する
-* レイヤーを分離した際に戻り値がEager Loadになる  
+* データソースレイヤーを分離した際に戻り値がEager Loadになる  
 Lazy Loadでエンティティを返すにはテクニックがいる
 
 [^1]:個々のクエリを再利用してしまい、最終的にはAPIでもN+1で呼び出される危険性がある
@@ -1349,12 +1359,16 @@ Lazy Loadでエンティティを返すにはテクニックがいる
 
 # 学びほぐし事例<material-symbols-counter-6 />のブレークスルー
 
-* WIP
+* 適切に集約を扱うクエリを定義する  
+集約ルートのモデルのデータアクセスパターン毎にクエリを分離させる
+* 集計機能実装時にデータベースの力を借りる  
+大量データを全てメモリロードして集計せずに、集計関数を利用する
+
 
 ---
 
 # ActiveRecord系ライブラリとの向き合い方
-ドメインロジックをドメインモデルに持たせている前提
+ActiveRecordは戦術的に利用する
 
 * Infrastructure層でRepositoryを実装したクラスでActiveRecordは使っても問題ないハズ [^1]  
 ORマッパー・クエリービルダとして使う
@@ -1425,6 +1439,8 @@ layout: two-cols-header
 * [ツナギメエフエム Ep.52](https://listen.style/p/tsunagimefm/tnjsz79v)
 * [Patterns of Enterprise Application Architecture / Martin Fowler's Bliki (ja)](https://bliki-ja.github.io/pofeaa/)
 * [TM（T字形ER）によるモデリング](https://www.sea.jp/Events/symposium/ss2009/contents/07-Modeling/ss2009-modeling-slide-tokimoto.pdf)
+* [A Philosophy of Software Design, 2nd Edtion](https://www.amazon.co.jp/Philosophy-Software-Design-2nd-English-ebook/dp/B09B8LFKQL)
+* [A Philosophy of Software Design を30分でざっと理解する](https://speakerdeck.com/iwashi86/understand-roughly-philosophy-of-software-design-in-30-minutes)
 
 
 ---
