@@ -622,19 +622,25 @@ ActiveRecordパターンは敢えてレイヤーを分けずに密結合にし�
 責務を明確にし、複雑性の排除と隠蔽を行う
 * テストをしやすくする  
 Mockしやすくなる。DBに依存しないテストになる  [^1]
-* コードの可読性が上がり、認知負荷がさがる  
+* 変更の局所化ができる  
+層を分けることで、変更が発生したときに影響を受ける範囲を限定させる。
 
 <br />
 
 <v-click>
 
 <div class="fusen-003">
-複雑性に戦う為！
+ソフトウェアの複雑性を管理する為！異なる層、異なる抽象度にしていく！<br />  
+各層の責務と依存関係を明確にすることで、本質的な問題と向き合える
 </div>
 
 </v-click>
 
 [^1]: ActiveRecordはDB依存がありミディアムテストになってしまう
+
+<!--
+複雑性の排除する。。複雑性を下位層に引き下げる
+-->
 
 ---
 layout: center
@@ -984,7 +990,7 @@ transition: fade
 |外側|低い<br />（具象）|低い|低い|データソース<br />（データベース,Web API）|ソフトウェアの技術的な詳細な部分や手段を表すもの|
 
 [^1]: 抽象度とは、コンポーネントが<div class="mention">他の具体的な実装や詳細から独立させた度合い</div>の指標
-[^2]: 重要度とは、システムが解決しようとしている課題や問題領域の関心事にどれだけ適合しているかを表す指標。<br /><div class="mention">高い ＝ 柔軟性と保守性が求められるコアとなるもの</div>
+[^2]: 重要度とは、システムが解決しようとしている課題や問題領域の関心事にどれだけ適合しているかを表す指標。<br /><div class="mention">高い ＝ 内部品質の高さが求められるコアとなるもの</div>
 [^3]: 安定度とは、修正されにくい度合い又は、<div class="mention">依存性関係を少なくし、他のモジュールの修正に閉じている状態</div>の度合い
 
 <style>
@@ -992,6 +998,15 @@ transition: fade
   font-size: 0.9em;
 }
 </style>
+
+<!---
+内部品質とは？  
+モジュール性 (modularity)  
+再利用容易性 (resability)  
+解析容易性 (analysability)  
+変更容易性 (modifiability)  
+テスト容易性 (tesability)  
+-->
 
 ---
 transition: fade
@@ -1160,10 +1175,11 @@ transition: fade
 * オブジェクトの状態や属性は変更可能になっている  
 オブジェクトの属性を更新し、データベースに反映するフローである
 * レコードの更新（削除も）簡単にできるという思い込み  
-Active Record では、ドメインオブジェクトがレコードとして表現されるため、レコードを更新することが簡単にできるように見える（表面的な操作としては）
+Active Record では、ドメインオブジェクトがレコードとして表現されるため、レコードの更新は簡単にできる（表面的な操作としては）
 
 ---
 layout: fact
+transition: fade
 ---
 
 # ああ・・・
@@ -1174,6 +1190,24 @@ layout: fact
 ---
 
 # 学びほぐし事例集
+
+---
+
+# 古い知識・価値観を捨て去り、アップデートをする前に。。
+ここからの注意点
+
+* 新しい用語が複数出てきます  
+掘り下げての説明をしません
+* 今回はクリーアーキテクチャでの設計に興味を持ってもらうことを目標とします  
+気になった用語を見つけたらワードだけ覚えて頂き、後から自身で調べるスタイルでお願いします 🙇‍♀
+* アンチパターンの紹介となります  
+以前の考え方や行動パターンと対比して新しい価値観や行動様式に触れます
+* これらを全てやらないとクリーアーキテクチャにならないというわけではありません[^1]  
+設計パターンなので、思考の流れを理解するのが大事です
+* クリーアーキテクチャの経験者で思い当たる節があったら一緒に内省しましょう😅 [^2]
+
+[^1]: [The Clean Architectureの誤解](./48)で触れた通り
+[^2]: 登壇者は全て心当たりがあります
 
 ---
 layout: fact
@@ -1189,27 +1223,27 @@ ActiveRecordは必ず1対1にしていたけれど
 * テーブル設計 != モデル設計  
 論理設計のモデル設計と物理設計のERD設計を同じものだと考えてしまっている[^1]  
 そもそもInfrastructure層の関心ごとをモデルに持ち込みたくない！  
-* Valueオブジェクト[^2]や集約[^3]が表現されていない[^4]  
+* Valueオブジェクト[^2]や集約[^3]が表現されていない  
+振る舞いや制約がない状態。若しくは分散してしまっている  
 全てprimitiveな型になっている場合は要注意
 * テーブルの正規化対応できない  
-関連モデルとしてモデル定義してしまうと、データ構造が露出してしまう
+単純に関連モデルとして実装してしまうと、データ構造が露出する
 
 [^1]: 日本語論理名を英語に翻訳するだけとか。。
 [^2]: 同一性を持たず、属性が同じであれば同じものとして扱われるオブジェクト。例えば、日付や金額など
 [^3]: 一貫性を保つ必要がある一連のドメインオブジェクトのまとまり。トランザクション境界にもなる
-[^4]: 振る舞いや制約がない状態。若しくは分散してしまっている
 
 ---
 
 # 学びほぐし事例<material-symbols-counter-1 />のブレークスルー
-ドメインファーストな設計をしましょう。永続化はレイヤーを分けて考えましょう
+ドメインファーストな設計をしましょう。永続化はレイヤーを分けて次に考えましょう
 
 * まずはドメインに向き合いましょう  
   1. ドメインの問題領域を理解する  
   2. ユビキタス言語を定義する  
   3. ドメインオブジェクトを識別する  
   識別したドメインオブジェクトの種類を決める。  
-  こでValueオブジェクトや集約を識別し、振る舞いや関係（協調・制約）も洗い出しする
+  ここでValueオブジェクトや集約を識別し、振る舞いや関係（協調・制約）も洗い出しする
 
 <!--
 関係とは、ドメインオブジェクト同士の相互作用や依存を指しています。
@@ -1227,16 +1261,19 @@ layout: fact
 # 学びほぐし事例<material-symbols-counter-2 />の変革の必要性
 ActiveRecordはミュータブルなモデル
 
-* 副作用が発生する可能性がある  
+* 状態を変更した際に副作用が発生する可能性がある  
 制約をすり抜けてしまう
 * コードの可読性が悪くなる
 * ドメインイベントを見落とす  
-手続き処理でsetterを呼び出しされても意図がわからない
+手続き的にsetterを呼び出しされても意図が伝わらない  
+ビジネスルールがあったとしても認識がされない[^1]
+
+[^1]: 後からビジネスルールの追加があった場合などに対応漏れが発生する
 
 ---
 
 # 学びほぐし事例<material-symbols-counter-2 />のブレークスルー
-複数ユースケースで同じプロパティの更新があったとして同じイベントと言えるか？
+オブジェクト作成後にその状態を変えることをできなくする（変更不可能なオブジェクトにする）
 
 * イミュータブルなモデルにしましょう  
   * ドメインイベント毎に適切なメソッドを定義しましょう
@@ -1252,7 +1289,7 @@ layout: fact
 ---
 
 # 学びほぐし事例<material-symbols-counter-3 />の変革の必要性
-ActiveRecordは制約違反があってもオブジェクト自体が存在できてしまう
+ActiveRecordは制約違反があってもオブジェクト自体は存在できてしまう
 
 * 制約違反したオブジェクトが存在できてしまう  
 制約をすり抜けてしまい整合性や一貫性がなくなる
@@ -1288,12 +1325,12 @@ layout: fact
 ---
 
 # 学びほぐし事例<material-symbols-counter-4 />の変革の必要性
-ActiveRecordではテーブルとの関連は原則1:1。分けれなくもないけれどあまりやらない
+ActiveRecordではテーブルとの関連は原則1:1。分けれなくもないけれど普通はやらない
 
 * データの正規化したデータをうまく扱えない  
-書き込み時はコードで扱い、関連する名称は扱わない  
-逆に読み込み時には名称も表示したい  
-→　フロントからコードに対する名称をN+1でAPIアクセスしてしまうなど
+書き込み時はコードで扱い、関連する名称は不要  
+逆に読み込み時には名称も一緒にロードして表示したい  
+→　フロントからコードに対する名称を取得するAPIに対してN+1呼び出してしまうなど
 * データ更新時に不要なデータまで必要になる  
 モデルが複雑で関連するデータが多い場合に準備が大変
 * 一括更新になりがちでデータの不整合（巻き戻し）が発生する  
@@ -1302,9 +1339,14 @@ ActiveRecordではテーブルとの関連は原則1:1。分けれなくもな�
 ---
 
 # 学びほぐし事例<material-symbols-counter-4 />のブレークスルー
+ReadオブジェクトとWriteオブジェクトを分ける  
 
-* ReadオブジェクトとWriteオブジェクトを分ける  
-コマンド・クエリ分離の原則（CQS）に従う
+* データの更新（コマンド）と参照（クエリ）を別々のモデルに分ける[^1]  
+コマンド・クエリ責務分離（Command-Query Responsibility Segregation, CQRS）の原則に従う。  
+* コマンドは正規化してデータの一貫性と整合性を保つ  
+* クエリは非正規化してデータ参照時のパフォーマンスを向上させる
+
+[^1]: モデルだけでなくデータソースも別にし、スケーラビリティやパフォーマンスを向上させる場合もあります。
 
 ---
 layout: fact
@@ -1324,17 +1366,20 @@ ActiveRecordでCRUDが簡単にでき、最新状態を常に上書きしてい�
 ---
 
 # 学びほぐし事例<material-symbols-counter-5 />のブレークスルー
+事実を失う操作（更新・削除）を行わせない、データの構造や関係とする
 
 * イミュータブルデータモデルで設計してみる  
-更新と削除を行わないテーブル設計  
+更新と削除を行わないテーブル設計[^1]  
 エンティティをイベントとリソースに分けてモデリングする
-* まずはCQSでコマンドのオブジェクトを分ける様にする  
+* コマンドのオブジェクトを分ける様にする  
 例えば新規登録用のオブジェクトと更新用のオブジェクト（イベントになる対象とその内容のみ）で分ける
 
 <div class="box-text-memo">
 イミュータブルデータモデルにしておくと、イベントソーシングパターンとも相性が良いです。<br />
-イベントの量が多くなった場合に分散処理することがしやすくなります。
+イベントの量が多くなった場合に分散処理しやすくなります。
 </div>
+
+[^1]: [T字形ER データベース設計技法](https://www.amazon.co.jp/T%E5%AD%97%E5%BD%A2ER-%E3%83%87%E3%83%BC%E3%82%BF%E3%83%99%E3%83%BC%E3%82%B9%E8%A8%AD%E8%A8%88%E6%8A%80%E6%B3%95-%E4%BD%90%E8%97%A4-%E6%AD%A3%E7%BE%8E/dp/488373109X)と相性が良いです
 
 ---
 layout: fact
@@ -1342,19 +1387,20 @@ layout: fact
 
 # <material-symbols-counter-6 />ユースケース毎に適切な粒度のクエリが作成されていない 
 
-
 ---
 
 # 学びほぐし事例<material-symbols-counter-6 />の変革の必要性
 ActiveRecordはデフォルトでLazy Loadが前提になっているけれど
 
 * データの関連を適切にクエリとして表現する必要がある  
-適切にクエリとして表現しないと、クエリ間 [^1] でもN+1が多発する
+集約を適切にクエリとして表現しないと、クエリ間 [^1] でもN+1が発生する
 * データソースレイヤーを分離した際に戻り値がEager Loadになる  
 Lazy Loadでエンティティを返すにはテクニックがいる
 
 [^1]:個々のクエリを再利用してしまい、最終的にはAPIでもN+1で呼び出される危険性がある
 
+---
+transition: slide-up
 ---
 
 # 学びほぐし事例<material-symbols-counter-6 />のブレークスルー
@@ -1364,6 +1410,83 @@ Lazy Loadでエンティティを返すにはテクニックがいる
 * 集計機能実装時にデータベースの力を借りる  
 大量データを全てメモリロードして集計せずに、集計関数を利用する
 
+---
+layout: fact
+---
+
+# Hello world!! 
+## Clean Architecture🎉
+学習おつかれさまでした
+
+---
+layout: fact
+---
+
+# Good by ActiveRecord?🤔
+クリーアーキテクチャとActiveRecordって相性悪くない？
+
+---
+
+# ソフトウェア設計における戦術と戦略の違い
+
+
+* 戦術（Tactics）  
+個々のモジュールやクラスなどの小さなスコープで適用できる設計テクニック  
+例えば、インターフェースと実装の分離や情報隠蔽など  
+→　SOLID原則も含まれます
+* 戦略（Strategy）  
+システム全体や大きなスコープで適用できる設計テクニック  
+例えば、モジュール間の依存関係や抽象化のレベルなど  
+→　クリーンアーキテクチャ
+
+---
+
+# ActiveRecordは戦術？それとも戦略？
+戦術を組み合わせることで戦略に昇華することができる
+
+* PoEAA的にはData Source Architectural Patternsで戦術になる
+* ActiveRecordパターンは以下の設計思想・戦術を組み合わせると戦略になる
+  1. CoC (Convention over Configuration) [^1]
+  2. DRY (Don’t Repeat Yourself)
+  3. REST (Representational State Transfer) [^2]
+
+[^1]: 設定より規約
+[^2]: RDBMSのCRUD（Create/Read/Update/Delete）とHTTPRequestの各メソッド（GET/POST/PUT/DELETE）に対応させる  
+更にActiveRecordのモデル名とエンドポイントのURIにも対応させる
+
+---
+
+# ActiveRecordパターンの戦略とは？
+
+* 敢えてレイヤーを分けずに関心事を密結合にしてDRYに書けるようにする戦略  
+データソースを隠蔽させるとか、ビジネスロジックの独立性は考えない  
+戦略的に捉えているので設計時の思考にも影響が大きい
+
+<br />  
+<v-click>
+
+<div class="fusen-003">
+クリーンアーキテクチャでは。。<br />  
+ソフトウェアをレイヤーに分けることで、依存関係の分離を実現し、技術的な詳細を外側に配置することで、システムの品質や拡張性を高める戦略<br />  
+</div>
+
+</v-click>
+
+---
+layout: fact
+---
+
+# 【結論】
+# 戦略として相性悪い
+目指している方向性が違い、戦術的にもバッティングしてしまっている  
+戦略なので設計時の思考にも反映されがちで矛盾が生じる  
+(アンチパターンの要因)
+
+---
+layout: fact
+---
+
+# なので。。
 
 ---
 
@@ -1378,21 +1501,39 @@ ORマッパー・クエリービルダとして使う
 ActiveRecordでLazy loadした結果でエンティティを生成して yield で返却する
 
 
-[^1]: 本質的にはData Mapperでオブジェクトとテーブルのマッピングしたほうが良さそう。但しマッピングのメタデータをDomain Modelに書く（Attributeやアノテーション定義する）と関心事が混ざるので悩ましい
+[^1]: 本質的にはData Mapperでオブジェクトとテーブルのマッピングしたほうが良さそう。  
+しかしマッピングのメタデータをDomain Modelに書く（Attributeやアノテーション定義する）と関心事が混ざるので悩ましい
 [^2]: DPOはRepositoryのインターフェース側に定義させる
 
 ---
 transition: slide-up
 ---
 
-# Bobおじさんから一言
+# フレームワークとの関わり方にも通ずる
 
-[Clean Coder "Active Record vs Objects" より](https://sites.google.com/site/unclebobconsultingllc/active-record-vs-objects)
+<Transform :scale="0.8">
+<img src="https://blog.cleancoder.com/uncle-bob/images/2012-08-13-the-clean-architecture/CleanArchitecture.jpg" class="h-90 rounded shadow" alt="CleanArchitecture" />
 
-<blockquote>
-<p>So applications built around ActiveRecord are applications built around data structures. And applications that are built around data structures are procedural—they are not object oriented. The opportunity we miss when we structure our applications around Active Record is the opportunity to use object oriented design.</p>
-<p>つまり、ActiveRecordを中心に構築されたアプリケーションは、データ構造を中心に構築されたアプリケーションということになる。データ構造を中心に構築されたアプリケーションは手続き型であり、オブジェクト指向ではない。ActiveRecordを中心にアプリケーションを構成すると、オブジェクト指向設計を使う機会を逃してしまう。</p>
-</blockquote>
+<br />
+
+* 一番外側に配置して、ユースケース・ドメインからは依存させないようにする
+* 戦略的ではなく、戦術として使う（薄く利用する）  
+戦術は局所的な影響に留めることができ、比較的容易に変更できることが多い
+
+</Transform>
+
+<box 
+  left="280px"
+  top="225px"
+  width="150px"
+  height="15px"
+  borderColor="red"
+  borderWidth="3px"
+  borderStyle="solid"
+  backgroundColor="#44ffd233"
+  />
+
+<arrow x1="320" y1="410" x2="320" y2="255" color="red" width="3" arrowSize="2" />
 
 ---
 layout: image-right
@@ -1429,19 +1570,40 @@ layout: two-cols-header
 
 # よりクリーンなコードにしていく
 
-* 複雑性に立ち向かう
-* 分散システムをターゲットにしていく
+* 複雑性は下位層に引き下げる  
+データソース以外にも複雑なものはいっぱいある
+* モデルの表現を豊かにする  
+Valueオブジェクト・集約・ドメインイベントを識別して、振る舞いや関係を定義する  
+構造や振る舞いが明確で理解しやすい状態にする
+* イミュータブルなモデル・データ構造にして整合性や一貫性をもたせる
+* CQRSの原則に従いスケーラビリティやパフォーマンスを向上させる  
+将来的な分散システム（マイクロサービス等）への移行も視野に入れておく  
+別の関心事としてコンポーネントとして定義  
+切り出し易い状態になっていることが変化に強くなる  
+→　複雑さが十分下位層に引き下げられている状態
 
 ---
 
-# 参考資料＆紹介した記事など
+# Bobおじさんから一言
+
+[Clean Coder "Active Record vs Objects" より](https://sites.google.com/site/unclebobconsultingllc/active-record-vs-objects)
+
+<blockquote>
+<p>So applications built around ActiveRecord are applications built around data structures. And applications that are built around data structures are procedural—they are not object oriented. The opportunity we miss when we structure our applications around Active Record is the opportunity to use object oriented design.</p>
+<p>つまり、ActiveRecordを中心に構築されたアプリケーションは、データ構造を中心に構築されたアプリケーションということになる。データ構造を中心に構築されたアプリケーションは手続き型であり、オブジェクト指向ではない。ActiveRecordを中心にアプリケーションを構成すると、オブジェクト指向設計を使う機会を逃してしまう。</p>
+</blockquote>
+
+---
+
+# Note
+参考資料＆紹介した記事など
 
 * [ツナギメエフエム Ep.52](https://listen.style/p/tsunagimefm/tnjsz79v)
 * [Patterns of Enterprise Application Architecture / Martin Fowler's Bliki (ja)](https://bliki-ja.github.io/pofeaa/)
-* [TM（T字形ER）によるモデリング](https://www.sea.jp/Events/symposium/ss2009/contents/07-Modeling/ss2009-modeling-slide-tokimoto.pdf)
+* [texta.fm 4.Not Just ORM](https://open.spotify.com/episode/5boIuz95jooLwsfcYjPN8g)
 * [A Philosophy of Software Design, 2nd Edtion](https://www.amazon.co.jp/Philosophy-Software-Design-2nd-English-ebook/dp/B09B8LFKQL)
 * [A Philosophy of Software Design を30分でざっと理解する](https://speakerdeck.com/iwashi86/understand-roughly-philosophy-of-software-design-in-30-minutes)
-
+* [TM（T字形ER）によるモデリング](https://www.sea.jp/Events/symposium/ss2009/contents/07-Modeling/ss2009-modeling-slide-tokimoto.pdf)
 
 ---
 layout: end
