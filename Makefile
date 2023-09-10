@@ -19,13 +19,13 @@ dev: ## Run dev server
 dev: node_modules
 	npm run dev
 
-dist/index.html: node_modules
+dist/index.html: node_modules slides.md
 	npm run build
 
-slides-export.pdf: node_modules
+slides-export.pdf: node_modules slides.md
 	npm run export
 
-slides-export-notes.pdf: node_modules
+slides-export-notes.pdf: node_modules slides.md
 	npm run export-notes
 
 node_modules: package.json package-lock.json
