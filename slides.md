@@ -1274,8 +1274,10 @@ layout: fact
 # 学びほぐし事例<material-symbols-counter-5 />の変革の必要性
 ActiveRecordでCRUDが簡単にでき、最新状態を常に上書きしていたけれど
 
-* ドメインのイベントを見落としている
+* ドメインのイベントを見落としている[^1]  
 * 新規登録時と更新時の制約が違うケースがある
+
+[^1]: モデルにnull許可のプロパティが多い場合は情報が混ざっている可能性がある
 
 ---
 
@@ -1509,6 +1511,7 @@ Valueオブジェクト・集約・ドメインイベントを識別して、振
 * [A Philosophy of Software Design を30分でざっと理解する](https://speakerdeck.com/iwashi86/understand-roughly-philosophy-of-software-design-in-30-minutes)
 * [TM（T字形ER）によるモデリング](https://www.sea.jp/Events/symposium/ss2009/contents/07-Modeling/ss2009-modeling-slide-tokimoto.pdf)
 * [PHPではじめるCQRSっぽいやつ](https://speakerdeck.com/dnskimo/phpdehazimerucqrstupoiyatu)
+* [現場で役立つシステム設計の原則 〜変更を楽で安全にするオブジェクト指向の実践技法](https://gihyo.jp/book/2017/978-4-7741-9087-7)
 
 ---
 layout: end
