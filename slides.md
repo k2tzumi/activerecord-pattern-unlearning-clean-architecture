@@ -1127,6 +1127,7 @@ layout: fact
 ---
 
 # <material-symbols-counter-1 />テーブル定義 = Domain modelのプロパティ
+表面的なデータ構造だけで設計してないか？  
 
 ---
 
@@ -1135,7 +1136,7 @@ ActiveRecordは必ず1対1にしていたけれど
 
 * テーブル設計 != モデル設計  
 論理設計と物理設計を同じと思っている[^1]  
-データ永続化とは独立しているので別で考えるべき！  
+データ永続化より先に独立して考える  
 * Valueオブジェクト[^2]や集約[^3]が表現されていない  
 振る舞いや制約がないか、分散している  
 primitiveな型Onlyは要注意
@@ -1189,17 +1190,16 @@ ActiveRecordはミュータブルなモデル
 オブジェクト作成後にその状態を変えることをできなくする（変更不可能なオブジェクトにする）
 
 * イミュータブルなモデルにしましょう  
-ドメインイベント毎に適切なメソッドを定義しましょう[^1]
+ドメインイベント毎に適切なメソッドを定義しましょう
 * コンストラクタで制約を定義しましょう  
 イミュータブルなモデルでコンストラクタに制約が定義されていれば、各種イベントで状態が変化しても制約が必ず有効になります
-
-[^1]: ドメインイベントを発行するメソッドは、状態を新しく作り替えたドメインオブジェクトを生成し、発行したイベントも返すようにします
 
 ---
 layout: fact
 ---
 
 # <material-symbols-counter-3 />コンストラクタに制約がない  
+引数の型指定も制約になる
 
 ---
 
@@ -1266,7 +1266,7 @@ ReadオブジェクトとWriteオブジェクトを分ける
 layout: fact
 ---
 
-# <material-symbols-counter-5 />ユースケース毎に適切なコマンドが作成されていない  
+# <material-symbols-counter-5 />ユースケース毎に適切なコマンドがない  
 データの新規登録と更新の両対応のメソッドが定義されている
 
 ---
@@ -1299,7 +1299,8 @@ ActiveRecordでCRUDが簡単にでき、最新状態を常に上書きしてい�
 layout: fact
 ---
 
-# <material-symbols-counter-6 />ユースケース毎に適切な粒度のクエリが作成されていない 
+# <material-symbols-counter-6 />ユースケース毎に適切な粒度のクエリがない 
+集約がうまく扱えていない
 
 ---
 
@@ -1469,7 +1470,7 @@ image: https://source.unsplash.com/collection/94734566/960x1080
   - データベースの操作が単純
   - ビジネスロジックが複雑でない
 * クリーンアーキテクチャの場合  
-(SOLID / 変更容易性・拡張性重視 / 作るものが複雑で不明確且つ変更多い)
+(SOLID / 変更容易性・拡張性重視 / 作るものが複雑で不明確、又は変更多い)
   - ビジネスロジックやドメイン知識が重要
   - 外部リソースやフレームワークに依存しないようにしたい
   - 変更や追加に柔軟に対応したい
@@ -1505,9 +1506,9 @@ Valueオブジェクト・集約・ドメインイベントを識別して、振
 * [ツナギメエフエム Ep.52](https://listen.style/p/tsunagimefm/tnjsz79v)
 * [Patterns of Enterprise Application Architecture / Martin Fowler's Bliki (ja)](https://bliki-ja.github.io/pofeaa/)
 * [texta.fm 4.Not Just ORM](https://open.spotify.com/episode/5boIuz95jooLwsfcYjPN8g)
-* [A Philosophy of Software Design, 2nd Edtion](https://www.amazon.co.jp/Philosophy-Software-Design-2nd-English-ebook/dp/B09B8LFKQL)
 * [A Philosophy of Software Design を30分でざっと理解する](https://speakerdeck.com/iwashi86/understand-roughly-philosophy-of-software-design-in-30-minutes)
 * [TM（T字形ER）によるモデリング](https://www.sea.jp/Events/symposium/ss2009/contents/07-Modeling/ss2009-modeling-slide-tokimoto.pdf)
+* [PHPではじめるCQRSっぽいやつ](https://speakerdeck.com/dnskimo/phpdehazimerucqrstupoiyatu)
 
 ---
 layout: end
