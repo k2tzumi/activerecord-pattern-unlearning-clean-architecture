@@ -1513,6 +1513,7 @@ Valueオブジェクト・集約・ドメインイベントを識別して、振
 参考資料＆紹介した記事など
 
 * [ツナギメエフエム Ep.52](https://listen.style/p/tsunagimefm/tnjsz79v)
+* [ちょうぜつソフトウェア設計入門――PHPで理解するオブジェクト指向の活用](https://gihyo.jp/book/2022/978-4-297-13234-7)
 * [Patterns of Enterprise Application Architecture / Martin Fowler's Bliki (ja)](https://bliki-ja.github.io/pofeaa/)
 * [texta.fm 3.Low-Code Development](https://open.spotify.com/episode/5HOXIVtwaNOHRqB34RtjLc)
 * [texta.fm 4.Not Just ORM](https://open.spotify.com/episode/5boIuz95jooLwsfcYjPN8g)
