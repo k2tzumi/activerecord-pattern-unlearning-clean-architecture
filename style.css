@@ -4,7 +4,7 @@
   display: inline-block;
 }
 
-.fusen-003 {
+.fusen {
   display: flex;
   align-items: center;
   position: relative;
@@ -14,7 +14,7 @@
   color: #333333;
 }
 
-.fusen-003::before {
+.fusen::before {
   position: absolute;
   bottom: -5px;
   right: 7px;
