@@ -110,8 +110,7 @@ transition: fade-out
 ---
 
 # 日々ちょうぜつ分厚い本と向き合っています
-圧巻の1.5K頁オーバー。2.2ちょうぜつぐらい。3年に一回、大改訂（大改定）があります。  
-レセプト基盤を開発しています！先月ツナギメエフエムにゲスト出演してお仕事のお話をさせて頂きました！
+圧巻の1.5K頁オーバー。3年に一回、大改訂（大改定）があります。レセプト業務の基盤システムを開発しています！先月ツナギメエフエムにゲスト出演してお話をさせて頂きました！
 
 <img src="/ISBN-978-4805887332.png" />
 
@@ -238,12 +237,13 @@ ActiveRecordパターンでは、テーブルと1対1で対応するモデル（
 [^1]: ChatGPTさん曰く
 
 ---
-layout: center
+layout: fact
 transition: fade-out
 ---
 
-# 各種フレームワーク・ライブラリで採用
-
+# <logos-composer />
+# 各種フレームワーク
+# ライブラリで採用
 ---
 layout: two-cols
 ---
@@ -327,7 +327,7 @@ foreach ($users as $user) {
 ```
 
 ---
-layout: center
+layout: fact
 ---
 
 # 👍 超絶便利！
@@ -340,7 +340,7 @@ layout: center
 # テーブルとオブジェクトが自動的にマッピングされる！
 
 ---
-layout: center
+layout: fact
 transition: slide-up
 ---
 
@@ -355,9 +355,9 @@ image: https://m.media-amazon.com/images/I/51QgGZaWj-L._SX515_BO1,204,203,200_.j
 
 RailsのActiveRecordが初出ではない
 
-Ruby on RailsのActiveRecordという名称は、2002年にマーチンファウラー氏が著した書籍「Patterns of Enterprise Application Architecture（PoEAA）」で紹介されたActiveRecordパターンに由来しています。[^1]
+Ruby on RailsのActiveRecordという名称は、マーチンファウラー氏の書籍「Patterns of Enterprise Application Architecture（PoEAA）」(2002年出版)で紹介されたActiveRecordパターンに由来しています。[^1]
 
-[^1]: パターン集なので、用語自体はもっと先からあった模様
+[^1]: パターンをまとめた設計カタログで、用語自体はもっと先からあった模様
 
 <!--
 エンタープライズ・アプリケーション開発者が直面する厳しい課題に直接応えるために書かれた。
@@ -367,7 +367,7 @@ Railsの最初のバージョン公開は2004年になります
 
 ---
 
-# PoEAAがまとめた設計カタログ
+# PoEAAで紹介されている設計カタログ
 以下の9つのカテゴリに40種類のパターンをまとめられている [^1]
 
 1. Domain Logic Patterns
@@ -385,7 +385,7 @@ https://bliki-ja.github.io/pofeaa/CatalogOfPofEAA_Ja
 
 ---
 
-# PoEAAがまとめた設計カタログ
+# PoEAAで紹介されている設計カタログ
 ActiveRecordパターンに言及されている領域
 
 1. Domain Logic Patterns
@@ -614,7 +614,7 @@ image: https://m.media-amazon.com/images/I/51LkcwTMC8L._SX387_BO1,204,203,200_.j
 第Ⅲ部 設計の原則
 
 * SOLIDの原則  
-コンポーネントレベルで設計の原則が適用されている
+設計の原則がコンポーネントレベルまで適用されている
 
 ---
 
@@ -639,20 +639,20 @@ image: https://m.media-amazon.com/images/I/51LkcwTMC8L._SX387_BO1,204,203,200_.j
 
 ---
 
-# SRP: 単一責務の原則
+# SRP: 単一責任の原則
 Single Responsibility Principle
 
-一つのモジュールやクラスや関数は、一つの機能だけを持つべきであるという原則  
+一つのモジュールやクラスは、一つの機能だけを持つべきであるという原則  
 これにより、コードの変更やテストや再利用がしやすくなる
 
 ### 🚩 悪い兆候
-多目的クラス, 神クラス, 責任の不明確さ
+多目的クラス, 神クラス, 責務の不明確さ
 
 <v-click>
 
 <div class="fusen">
-クリーンアーキテクチャでは、各層やコンポーネントが単一責任を持つように設計されます<br />
-レイヤーごとに責任を分けることで、変更が他のレイヤーに影響しないようにしています  
+クリーンアーキテクチャでは、各層やコンポーネントが単一の責務を持つように設計されます<br />
+レイヤーごとに責務を分けることで、変更が他のレイヤーに影響しないようにしています  
 </div>
 
 </v-click>
@@ -666,7 +666,7 @@ Open-Closed Principle
 これにより、ソースコードを変えずに機能を拡張でき、保守性や再利用性が向上する
 
 ### 🚩 悪い兆候
-条件分岐の乱用, 責任過多
+条件分岐の乱用, 責務過多
 
 <v-click>
 
@@ -835,7 +835,7 @@ transition: fade
 
 <v-click>
 
-。。。本当？
+。。のか？
 
 </v-click>
 
@@ -936,15 +936,22 @@ Stable Dependencies Principle
 
 <div class="fusen">
 クリーンアーキテクチャでは、重要度が一番高いもの=ドメインモデルとしている<br />
-ドメインモデルの設計を長期的に安定させるという考え方<br />
-技術的な詳細で不安定なデータソースにドメインが依存するのはおかしい！
+ドメインモデルの設計を長期的に安定させるという考え方
 </div>
 
 </v-click>
 
 ---
+transition: fade
+layout: section
+---
 
-# 不安定なレイヤーから切り離す手法
+# 技術的な詳細で不安定なデータソースにドメインが依存するのはおかしい！
+抽象が具象に依存する
+
+---
+
+# 複雑で不安定なものから切り離す手法
 制御の流れと依存の向きは連動してしまう
 
   * 制御のフロー  
@@ -972,11 +979,11 @@ Infrastructure: Data Source<br />
 transition: fade
 ---
 
-# 不安定なレイヤーから切り離す手法
+# 複雑で不安定なものから切り離す手法
 ドメインモデルの永続化するのに具象に依存させない
 
-* DIP依存性逆転の原則  
-インターフェースを定義しドメイン層は永続化技術の詳細から隔離され、抽象に依存させる  
+* 依存性逆転の原則  
+ドメイン層はインターフェースに依存させることで永続化技術の詳細から隔離させる
 
 ```mermaid
 ---
@@ -1013,7 +1020,7 @@ layout: center
 
 ```mermaid
 ---
-title: Application Layer内を細分化
+title: Application Layerを見直し
 ---
 classDiagram
     direction LR
@@ -1086,7 +1093,7 @@ transition: fade
 データ永続化とドメイン振る舞いを一体化させる思い込み
 * テーブル設計を先にし、モデルに制約を後付けする  
 それが一番早くて黄金パターンだという成功体験（シンプルなドメインのみという前提無視）
-* ドメインオブジェクト＝レコードでいつでも更新・削除は簡単  
+* レコード＝ドメインオブジェクトでいつでも更新・削除は簡単  
 オブジェクトの属性を更新したり、saveやdeleteがいつでもカジュアルにできる（表面的な操作としては）
 
 
@@ -1106,14 +1113,14 @@ layout: fact
 
 ---
 
-# 古い価値観・行動原理を捨て、アップデートをする前に。。
+# アンラーニングの前に。。
 ここからの注意点
 
 * 新しい用語が複数出てきます  
 詳細な説明はしません
 * クリーアーキテクチャでの設計に興味を持ってもらうことが目標です  
 気になった用語はワードだけ覚えて、後で自分で調べるスタイルでお願いします 🙇‍♀
-* アンチパターンの紹介となります  
+* アンチパターンとその対処法になります  
 以前の考え方や行動パターンと対比して新しいものに触れます
 * 全てやらないとクリーアーキテクチャにならないわけではありません[^1]  
 設計パターンなので、思考の流れを理解するのが大事です
@@ -1127,7 +1134,7 @@ layout: fact
 ---
 
 # <material-symbols-counter-1 />テーブル定義 = Domain modelのプロパティ
-表面的なデータ構造だけで設計してないか？  
+表面的なデータ構造だけで設計してませんか？  
 
 ---
 
@@ -1136,9 +1143,9 @@ ActiveRecordは必ず1対1にしていたけれど
 
 * テーブル設計 != モデル設計  
 論理設計と物理設計を同じと思っている[^1]  
-データ永続化より先に独立して考える  
+テーブル設計の変更に影響を受ける  
 * Valueオブジェクト[^2]や集約[^3]が表現されていない  
-振る舞いや制約がないか、分散している  
+振る舞いや制約がないか、分散してしまっている  
 primitiveな型Onlyは要注意
 * テーブルの正規化対応できない  
 単純に関関連モデルとして実装すると、データ構造が露出する
@@ -1187,7 +1194,7 @@ ActiveRecordはミュータブルなモデル
 ---
 
 # 学びほぐし事例<material-symbols-counter-2 />のブレークスルー
-オブジェクト作成後にその状態を変えることをできなくする（変更不可能なオブジェクトにする）
+オブジェクト作成後にその状態を変えることをできなくする（不変オブジェクトにする）
 
 * イミュータブルなモデルにしましょう  
 ドメインイベント毎に適切なメソッドを定義しましょう
@@ -1199,7 +1206,7 @@ layout: fact
 ---
 
 # <material-symbols-counter-3 />コンストラクタに制約がない  
-引数の型指定も制約になる
+引数の型指定も制約になります
 
 ---
 
@@ -1242,7 +1249,7 @@ layout: fact
 # 学びほぐし事例<material-symbols-counter-4 />の変革の必要性
 ActiveRecordではテーブルとの関連は原則1:1。分けれなくもないけれど普通はやらない
 
-* データの正規化したデータをうまく扱えない  
+* 正規化したデータをうまく扱えない  
 書き込み時はコードのみ、名称は不要  
 逆に読み込み時には名称も一緒にロードして表示したい  
 * データ更新時に不要なデータまで必要になる  
@@ -1409,7 +1416,7 @@ layout: fact
 ---
 
 # 今後のActiveRecord系ライブラリとの向き合い方
-ActiveRecordは戦術的に使う
+ActiveRecordは戦術的に使うだけに留める
 
 * Infrastructure層のRepositoryでActiveRecordを使う [^1]  
 ORマッパー・クエリービルダとして使う
@@ -1507,6 +1514,7 @@ Valueオブジェクト・集約・ドメインイベントを識別して、振
 
 * [ツナギメエフエム Ep.52](https://listen.style/p/tsunagimefm/tnjsz79v)
 * [Patterns of Enterprise Application Architecture / Martin Fowler's Bliki (ja)](https://bliki-ja.github.io/pofeaa/)
+* [texta.fm 3.Low-Code Development](https://open.spotify.com/episode/5HOXIVtwaNOHRqB34RtjLc)
 * [texta.fm 4.Not Just ORM](https://open.spotify.com/episode/5boIuz95jooLwsfcYjPN8g)
 * [A Philosophy of Software Design を30分でざっと理解する](https://speakerdeck.com/iwashi86/understand-roughly-philosophy-of-software-design-in-30-minutes)
 * [TM（T字形ER）によるモデリング](https://www.sea.jp/Events/symposium/ss2009/contents/07-Modeling/ss2009-modeling-slide-tokimoto.pdf)
