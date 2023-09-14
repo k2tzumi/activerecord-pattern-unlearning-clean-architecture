@@ -168,7 +168,7 @@ layout: two-cols-header
 
 ::left::
 
-### 話さないこと
+### 🤫話さないこと
 
 - 具体的な実装例  
 このセッションでは設計パターンの原理・原則に焦点を当てます
@@ -177,7 +177,7 @@ layout: two-cols-header
 
 ::right::
 
-### 話すこと
+### 📣話すこと
 
 - 設計の原理・原則及びパターンの適用条件  
 - クリーンアーキテクチャの目指すゴール
@@ -190,18 +190,18 @@ transition: slide-up
 layout: two-cols-header
 ---
 
-# 本セッションのゴール
+# 本セッションのゴール🏁
 
 ::left::
 
-## ActiveRecordパターンの
+## 🤓ActiveRecordパターンの
 ## 経験者向け
 
 アンチパターンに陥らない為の前提知識を得ること
 
 ::right::
 
-## クリーンアーキテクチャに
+## 🧐クリーンアーキテクチャに
 ## 興味がある人向け
 
 採用のメリットや概念が理解できること
@@ -344,7 +344,7 @@ layout: fact
 transition: slide-up
 ---
 
-# 深掘りしてみる
+# ⛏深掘りしてみる
 
 ---
 layout: image-right
@@ -477,7 +477,7 @@ layout: center
 transition: fade
 ---
 
-# ActiveRecordは凄くリッチなパターン
+# 💎ActiveRecordは凄くリッチなパターン
 
 ---
 
@@ -516,7 +516,7 @@ layout: center
 transition: slide-up
 ---
 
-# 責務が溢れてきてしまっている
+# 🤮責務が溢れてきてしまっている
 
 ---
 
@@ -643,7 +643,7 @@ image: https://m.media-amazon.com/images/I/51LkcwTMC8L._SX387_BO1,204,203,200_.j
 Single Responsibility Principle
 
 一つのモジュールやクラスは、一つの機能だけを持つべきであるという原則  
-これにより、コードの変更やテストや再利用がしやすくなる
+これにより、コードの変更やテストがし易く再利用性が向上する
 
 ### 🚩 悪い兆候
 多目的クラス, 神クラス, 責務の不明確さ
@@ -722,7 +722,7 @@ Interface Segregation Principle
 # DIP: 依存性逆転の原則
 Dependency Inversion Principle
 
-プログラムの重要な部分は、重要でない部分に依存しないようにするべきである。  
+プログラムの重要な部分は、逆に重要でない部分にが依存しないようにするべきである。  
 そのためにモジュールは、抽象に依存するようにするべきであるという原則  
 これによりモジュールは、実装の詳細に左右されなくなり、コードの柔軟性や再利用性が向上する
 
@@ -743,7 +743,7 @@ layout: center
 ---
 
 
-# The Clean Architecture（≠Clean Architecture）の誤解
+# The Clean Architecture（≠Clean Architecture）の誤解😕
 
 ---
 
@@ -946,7 +946,7 @@ transition: fade
 layout: section
 ---
 
-# 技術的な詳細で不安定なデータソースにドメインが依存するのはおかしい！
+# 🙃技術的な詳細で不安定なデータソースにドメインが依存するのはおかしい！
 抽象が具象に依存する
 
 ---
@@ -1008,7 +1008,7 @@ classDiagram
 layout: center
 ---
 
-# これで本当にCleanといえるのか？
+# ✨これで本当にCleanといえるのか？
 
 ---
 
@@ -1385,14 +1385,14 @@ layout: two-cols-header
 # 戦略の相違
 
 ::left::
-## ActiveRecord
+## 🏃‍♂️ActiveRecord
 
 * レイヤーを分けずにDRYに書く戦略  
 データソースやビジネスロジックの分離は考えない  
 
 ::right::
 
-## クリーンアーキテクチャ
+## 🌱クリーンアーキテクチャ
 
 * レイヤーに分けて依存関係を分離し、品質を高める戦略  
 ドメインからデータソースを意識させなくする 
@@ -1490,7 +1490,7 @@ image: https://source.unsplash.com/collection/94734566/960x1080
 
 * ActiveReocrdは責務が多いので分解する
 * SOLIDでコアなドメインになるようにモデリングする
-* コアの抽象度を高くして安定させる
+* ドメインファーストな設計をする
 
 ---
 
