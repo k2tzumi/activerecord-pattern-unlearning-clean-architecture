@@ -38,7 +38,7 @@ addons:
 # ActiveRecordパターンの呪縛を学びほぐして挑むクリーンアーキテクチャへの入り口
 
 [PHPカンファレンス沖縄2023](https://phpcon.okinawa.jp/)　Sep 16th, 2023.  
-v0.0.3
+v0.0.4
 
 <div class="pt-12">
   <span @click="$slidev.nav.next" class="px-2 py-1 rounded cursor-pointer" hover="bg-white bg-opacity-10">
