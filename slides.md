@@ -143,6 +143,12 @@ transition: fade-out
 
 <br />
 <Transform :scale="2">
+<logos-discord-icon />
+</Transform>
+<br />
+<a href="https://discord.com/channels/1150751595089371290/1150782186568556594">#trackb-1540-activerecordパターンの呪縛を学びほぐして挑むクリーンアーキテクチャへの入り口</a>
+<br />
+<Transform :scale="2">
 <fa6-brands-square-x-twitter />
 </Transform>
 <br />
