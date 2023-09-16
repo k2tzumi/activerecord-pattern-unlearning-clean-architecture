@@ -146,7 +146,7 @@ transition: fade-out
 <fa6-brands-square-x-twitter />
 </Transform>
 <br />
-<a href="https://twitter.com/search?q=%23phpcon_okinawa%20%23trackB">#phpcon_okinawa #trackB</a>
+<a href="https://twitter.com/search?q=%23phpcon_okinawa%20%23track_b">#phpcon_okinawa #track_b</a>
 
 
 
